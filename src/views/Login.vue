@@ -104,7 +104,6 @@
                 this.$v.$reset()
                 this.email = ''
                 this.password = ''
-                // console.log(formData)
             }
         }
     }

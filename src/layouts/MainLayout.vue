@@ -1,12 +1,67 @@
 <template>
-  <div class="card-panel purple lighten-4" style="height: 100vh">
+  <div>
+    <nav class="teal">
+      <a href="#" data-target="mobile-demo" class="sidenav-trigger show-on-small"><i class="material-icons">menu</i></a>
+      <ul class="right">
+        <li><a
+                class="dropdown-trigger"
+                href="#"
+                data-target="dropdown"
+                ref="dropdown"
+        >Mobile<i class="material-icons right">arrow_drop_down</i></a>
+        </li>
+        <li>
+          <ul id="dropdown" class="dropdown-content">
+            <li><a href="#!">one</a></li>
+            <li><a href="#!">two</a></li>
+            <li class="divider"></li>
+            <li><router-link to="/login?message=you are out">выйти</router-link></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="right hide-on-small-only">
+        <li v-for="item in menuItems" :key="item.name"><router-link :to="item.path">{{item.name}}</router-link></li>
+      </ul>
+    </nav>
+
+    <ul ref="sidenav" class="sidenav" id="mobile-demo">
+      <li v-for="item in menuItems" :key="item.name"><router-link :to="item.path">{{item.name}}</router-link></li>
+    </ul>
+
     <router-view/>
+
   </div>
+
 </template>
 
 <script>
     export default {
-        name: "MainLayout"
+        name: "MainLayout",
+        data: () => ({
+            menuItems: [
+                {name: 'One', path: '/aaa'},
+                {name: 'Two', path: '/bbb'},
+                {name: 'Three', path: '/ccc'},
+                {name: 'Four', path: 'ddd'},
+            ],
+            dropdown: null,
+            sidebar: null
+        }),
+        mounted() {
+            const elems = this.$refs.sidenav
+            // eslint-disable-next-line no-undef
+            this.sidebar = M.Sidenav.init(elems)
+            // eslint-disable-next-line no-undef
+            this.dropdown = M.Dropdown.init(this.$refs.dropdown)
+        },
+        beforeDestroy() {
+            if (this.sidebar && this.sidebar.destroy) {
+                this.sidebar.destroy()
+            }
+            if (this.dropdown && this.dropdown.destroy) {
+                this.dropdown.destroy()
+            }
+        }
     }
 </script>
 

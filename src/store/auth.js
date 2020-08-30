@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import router from '../router'
+const  ipEndPort = process.env.VUE_APP_SERVERIPENDPORT
 export default {
     state: {
         username: null,
@@ -22,7 +23,7 @@ export default {
     actions: {
         async register({commit}, formData) {
             try {
-                const res = await Vue.http.post('http://localhost:9006/user/register',
+                const res = await Vue.http.post(`${ipEndPort}user/register`,
                     JSON.stringify(formData),
                     {'Content-Type': 'application/json'})
                 const data = await res.json()
@@ -34,7 +35,7 @@ export default {
         },
         async login({commit}, formData) {
             try {
-                const res = await Vue.http.post('http://localhost:9006/user/login',
+                const res = await Vue.http.post(`${ipEndPort}user/login`,
                     JSON.stringify(formData),
                     {'Content-Type': 'application/json'})
                 const data = await res.json()

@@ -50,6 +50,9 @@
                 минимум {{ $v.password.$params.minLength.min }} символов, сечас {{ password.length }}
               </small>
             </div>
+            <div class="card-action left-align">
+              <router-link to="/register">зарегистрироваться</router-link>
+            </div>
             <div class="card-action right-align">
               <button class="btn waves-effect waves-light" type="submit" name="action">Войти
                 <i class="material-icons right">send</i>
@@ -64,7 +67,7 @@
 
 <script>
     import {email, required, minLength} from 'vuelidate/lib/validators'
-
+    import {SHA256} from '../utils/sha256'
     export default {
         name: "Login",
         data: () => ({
@@ -92,7 +95,7 @@
                 }
                 const formData = {
                     email: this.email,
-                    password: this.password
+                    password: SHA256(this.password)
                 }
 
                 try {

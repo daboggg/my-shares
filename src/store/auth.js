@@ -30,7 +30,8 @@ export default {
                 commit('login', data)
                 await router.push('/')
             }catch (e) {
-                console.log(e.bodyText)
+                console.log(e.bodyText || e.body)
+                commit('setError', e.bodyText || e.body)
             }
         },
         async login({commit}, formData) {
@@ -42,7 +43,8 @@ export default {
                 commit('login', data)
                 await router.push('/')
             }catch (e) {
-                console.log(e.bodyText)
+                console.log(e.bodyText || e.body)
+                commit('setError', e.bodyText || e.body)
             }
         }
     },

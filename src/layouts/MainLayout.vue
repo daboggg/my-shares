@@ -35,6 +35,7 @@
 </template>
 
 <script>
+  import messageMixin from '../mixins/message.mixin'
     export default {
         name: "MainLayout",
         data: () => ({
@@ -47,6 +48,7 @@
             dropdown: null,
             sidebar: null
         }),
+        mixins: [messageMixin],
         mounted() {
             const elems = this.$refs.sidenav
             // eslint-disable-next-line no-undef

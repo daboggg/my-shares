@@ -86,6 +86,10 @@
                     this.$store.commit('logout')
                     this.$store.commit('setMessage', 'вы вышли из приложения')
                 }
+                if (this.$route.query.message === 'invalid token') {
+                    this.$store.commit('logout')
+                    this.$store.commit('setMessage', 'войдите в приложение')
+                }
             }
         },
         methods: {

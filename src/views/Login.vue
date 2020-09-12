@@ -84,10 +84,12 @@
             if (this.$route.query.message) {
                 if (this.$route.query.message === 'you are out') {
                     this.$store.commit('logout')
+                    this.$store.commit('clearTransactions')
                     this.$store.commit('setMessage', 'вы вышли из приложения')
                 }
                 if (this.$route.query.message === 'invalid token') {
                     this.$store.commit('logout')
+                    this.$store.commit('clearTransactions')
                     this.$store.commit('setMessage', 'войдите в приложение')
                 }
             }

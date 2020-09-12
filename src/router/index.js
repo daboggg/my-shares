@@ -12,6 +12,12 @@ const routes = [
         component: () => import('../views/Home.vue')
     },
     {
+        path: '/add',
+        name: 'addTransaction',
+        meta: {layout: 'main', auth: true},
+        component: () => import('../views/AddTransaction.vue')
+    },
+    {
         path: '/login',
         name: 'login',
         meta: {layout: 'empty'},

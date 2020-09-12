@@ -70,6 +70,12 @@ public class TokenFactory {
         }
     }
 
+    //возвращает id пользователя
+    public long getUserId() {
+        String tokenFromHeader = request.getHeader("Token");
+        return tokens.get(tokenFromHeader).userId;
+    }
+
     @Data
     @AllArgsConstructor
     class TokenHolder {

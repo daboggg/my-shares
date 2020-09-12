@@ -1,11 +1,5 @@
 <template>
   <div id="app">
-<!--    <h1>HEADER</h1>-->
-<!--    <router-link to="/login">login</router-link>-->
-<!--    <br>-->
-<!--    <router-link to="/register">register</router-link>-->
-<!--    <br>-->
-<!--    <router-link to="/login?message=you are out">logout</router-link>-->
     <component :is="layout">
       <router-view/>
     </component>

@@ -10,16 +10,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = "transac")
 @NoArgsConstructor
+@AllArgsConstructor
 public class Transaction {
-
-    public Transaction(String ticker, boolean directionOfTransaction, double price, int numberOfShares, long transactionDate, Long userId) {
-        this.ticker = ticker;
-        this.directionOfTransaction = directionOfTransaction;
-        this.price = price;
-        this.numberOfShares = numberOfShares;
-        this.transactionDate = transactionDate;
-        this.userId = userId;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,6 +22,18 @@ public class Transaction {
     private int numberOfShares;
     private long transactionDate;
     private Long userId;
+    @Column(length = 10000)
+    private String note;
+
+    public Transaction(String ticker, boolean directionOfTransaction, double price, int numberOfShares, long transactionDate, Long userId, String note) {
+        this.ticker = ticker;
+        this.directionOfTransaction = directionOfTransaction;
+        this.price = price;
+        this.numberOfShares = numberOfShares;
+        this.transactionDate = transactionDate;
+        this.userId = userId;
+        this.note = note;
+    }
 }
 
 

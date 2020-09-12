@@ -8,7 +8,7 @@
                 href="#"
                 data-target="dropdown"
                 ref="dropdown"
-        >Mobile<i class="material-icons right">arrow_drop_down</i></a>
+        >{{username}}<i class="material-icons right">arrow_drop_down</i></a>
         </li>
         <li>
           <ul id="dropdown" class="dropdown-content">
@@ -25,7 +25,7 @@
     </nav>
 
     <ul ref="sidenav" class="sidenav" id="mobile-demo">
-      <li v-for="item in menuItems" :key="item.name"><router-link :to="item.path">{{item.name}}</router-link></li>
+      <li @click="sidebar.close()" v-for="item in menuItems" :key="item.name"><router-link :to="item.path">{{item.name}}</router-link></li>
     </ul>
 
     <router-view/>
@@ -40,8 +40,8 @@
         name: "MainLayout",
         data: () => ({
             menuItems: [
-                {name: 'One', path: '/aaa'},
-                {name: 'Two', path: '/bbb'},
+                {name: 'Home', path: '/'},
+                {name: 'Add', path: '/add'},
                 {name: 'Three', path: '/ccc'},
                 {name: 'Four', path: 'ddd'},
             ],
@@ -55,6 +55,11 @@
             this.sidebar = M.Sidenav.init(elems)
             // eslint-disable-next-line no-undef
             this.dropdown = M.Dropdown.init(this.$refs.dropdown)
+        },
+        computed: {
+            username() {
+                return this.$store.getters.getUsername
+            }
         },
         beforeDestroy() {
             if (this.sidebar && this.sidebar.destroy) {

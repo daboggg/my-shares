@@ -6,6 +6,7 @@ import ru.zinin.myshares.model.Transaction;
 import ru.zinin.myshares.service.TransactionService;
 
 import javax.annotation.PostConstruct;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,8 +22,12 @@ public class TransactionController {
 
     @GetMapping
     @CrossOrigin(methods = RequestMethod.GET)
-    public ResponseEntity<?> getTransactions() {
+    public ResponseEntity<?> getTransactions() throws IOException {
         return transactionService.getTransactions();
     }
-
+    @PostMapping
+    @CrossOrigin(methods = RequestMethod.POST)
+    public ResponseEntity<?> addTransaction(@RequestBody Transaction transaction) throws IOException {
+        return transactionService.addTransaction(transaction);
+    }
 }

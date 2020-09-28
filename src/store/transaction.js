@@ -17,14 +17,13 @@ export default {
     actions: {
         async getTransactions({commit, getters}) {
             try {
-                const res = await Vue.http.get(`${ipEndPort}transaction`, {
+                const res = await Vue.http.get(`${ipEndPort}api/transaction`, {
                     headers: {
                         'Content-Type': 'application/json',
                         'Token': getters.getToken
                     }
                 })
                 const data = await res.json()
-                // console.log(data)
                 commit('setTransactions', data)
             } catch (e) {
                 if (e.bodyText === 'invalid token') {
@@ -37,9 +36,47 @@ export default {
         },
         async addTransaction({commit, getters}, formData) {
             try {
-                await Vue.http.post(`${ipEndPort}transaction`,
+                await Vue.http.post(`${ipEndPort}api/transaction`,
                     JSON.stringify(formData),
                     {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Token': getters.getToken
+                        }
+                    })
+            } catch (e) {
+                if (e.bodyText === 'invalid token') {
+                    router.push("/login?message=invalid token");
+                } else {
+                    console.log(e.bodyText || e.body);
+                    commit('setError', e.bodyText || e.body)
+                }
+            }
+        },
+        async editTransaction({commit, getters}, formData) {
+            try {
+                await Vue.http.put(`${ipEndPort}api/transaction`,
+                    JSON.stringify(formData),
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Token': getters.getToken
+                        }
+                    })
+            } catch (e) {
+                if (e.bodyText === 'invalid token') {
+                    router.push("/login?message=invalid token");
+                } else {
+                    console.log(e.bodyText || e.body);
+                    commit('setError', e.bodyText || e.body)
+                }
+            }
+        },
+        async deleteTransaction({commit, getters}, idTransaction) {
+            try {
+                await Vue.http.delete(`${ipEndPort}api/transaction`,
+                    {
+                        params: {id: idTransaction},
                         headers: {
                             'Content-Type': 'application/json',
                             'Token': getters.getToken

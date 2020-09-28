@@ -3,18 +3,19 @@ package ru.zinin.myshares.component;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import ru.zinin.myshares.model.User;
 import ru.zinin.myshares.model.UserDto;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.SecureRandom;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Component
 @Data
+@EnableScheduling
 public class TokenFactory {
 
     @Value("${time.validity.token}")
@@ -74,6 +75,18 @@ public class TokenFactory {
     public long getUserId() {
         String tokenFromHeader = request.getHeader("Token");
         return tokens.get(tokenFromHeader).userId;
+    }
+
+    // по расписанию очищает tokens
+    @Scheduled(cron = "0 0 0 * * ?", zone = "Europe/Moscow")
+    public void reportCurrentTime() {
+        Set<String> keys = tokens.keySet();
+        for (String key : keys) {
+            TokenHolder tokenHolder = tokens.get(key);
+            if (tokenHolder.creationTimeToken + timeValidityToken < System.currentTimeMillis()) {
+                tokens.remove(key);
+            }
+        }
     }
 
     @Data

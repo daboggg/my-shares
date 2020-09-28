@@ -39,9 +39,8 @@
         <div v-else class="card horizontal" v-for="(v ,k, i) in instruments" :key="i">
           <div class="card-stacked">
             <div class="card-content">
-              {{v.description}}
-              <br>
-              {{v.assetType}}
+              <h5>{{v.description}}</h5>
+              <p>{{v.assetType}}</p>
             </div>
             <div class="card-action">
               <a href="#" @click="ticker = k">Ticker: {{k}}</a>

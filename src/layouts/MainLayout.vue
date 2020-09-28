@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nav class="teal">
+    <nav class="teal" ref="nv">
       <a href="#" data-target="mobile-demo" class="sidenav-trigger show-on-small"><i class="material-icons">menu</i></a>
       <ul class="right">
         <li><a
@@ -42,7 +42,7 @@
             menuItems: [
                 {name: 'Home', path: '/'},
                 {name: 'Add', path: '/add'},
-                {name: 'Three', path: '/ccc'},
+                {name: 'Alert', path: '/alert'},
                 {name: 'Four', path: 'ddd'},
             ],
             dropdown: null,

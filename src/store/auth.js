@@ -23,7 +23,7 @@ export default {
     actions: {
         async register({commit}, formData) {
             try {
-                const res = await Vue.http.post(`${ipEndPort}user/register`,
+                const res = await Vue.http.post(`${ipEndPort}api/user/register`,
                     JSON.stringify(formData),
                     {'Content-Type': 'application/json'})
                 const data = await res.json()
@@ -36,7 +36,7 @@ export default {
         },
         async login({commit}, formData) {
             try {
-                const res = await Vue.http.post(`${ipEndPort}user/login`,
+                const res = await Vue.http.post(`${ipEndPort}api/user/login`,
                     JSON.stringify(formData),
                     {'Content-Type': 'application/json'})
                 const data = await res.json()

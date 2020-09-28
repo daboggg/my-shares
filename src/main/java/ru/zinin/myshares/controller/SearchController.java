@@ -7,7 +7,7 @@ import ru.zinin.myshares.service.SearchService;
 import java.io.IOException;
 
 @RestController
-@RequestMapping(path = "/search")
+@RequestMapping(path = "/api/search")
 public class SearchController {
 
     private final SearchService searchService;

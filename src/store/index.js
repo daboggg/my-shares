@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import auth from "./auth";
 import transaction from "./transaction";
+import chart from "./chart";
 import router from "../router";
 const  ipEndPort = process.env.VUE_APP_SERVERIPENDPORT
 
@@ -29,7 +30,7 @@ export default new Vuex.Store({
     actions: {
         async searchInstrument({commit, getters}, formData) {
             try {
-                const res = await Vue.http.get(`${ipEndPort}search/instrument`, {
+                const res = await Vue.http.get(`${ipEndPort}api/search/instrument`, {
                     params: formData,
                     headers: {
                         'Content-Type': 'application/json',
@@ -53,6 +54,6 @@ export default new Vuex.Store({
         message: s => s.message
     },
     modules: {
-        auth, transaction
+        auth, transaction, chart
     }
 })

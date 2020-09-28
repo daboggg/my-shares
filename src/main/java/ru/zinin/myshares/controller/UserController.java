@@ -6,7 +6,7 @@ import ru.zinin.myshares.model.User;
 import ru.zinin.myshares.service.UserService;
 
 @RestController
-@RequestMapping(path = "/user")
+@RequestMapping(path = "/api/user")
 public class UserController {
 
     private final UserService userService;

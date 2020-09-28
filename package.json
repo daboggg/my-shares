@@ -11,6 +11,7 @@
     "axios": "^0.20.0",
     "core-js": "^3.6.5",
     "materialize-css": "^1.0.0-rc.2",
+    "trading-vue-js": "^0.7.0",
     "vue": "^2.6.11",
     "vue-axios": "^2.1.5",
     "vue-resource": "^1.5.1",

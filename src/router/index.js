@@ -18,6 +18,18 @@ const routes = [
         component: () => import('../views/AddTransaction.vue')
     },
     {
+        path: '/alert',
+        name: 'alert',
+        meta: {layout: 'main', auth: true},
+        component: () => import('../views/Alert.vue')
+    },
+    {
+        path: '/charts/:ticker',
+        name: 'charts',
+        meta: {layout: 'chart', auth: true},
+        component: () => import('../components/Charts.vue')
+    },
+    {
         path: '/login',
         name: 'login',
         meta: {layout: 'empty'},
@@ -29,7 +41,7 @@ const routes = [
         meta: {layout: 'empty'},
         component: () => import('../views/Register.vue')
     }
-]
+];
 
 const router = new VueRouter({
     mode: 'history',
@@ -38,6 +50,7 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
+
     const usernameFromSessionStorage = sessionStorage.getItem('username')
     const tokenFromSessionStorage = sessionStorage.getItem('token')
 

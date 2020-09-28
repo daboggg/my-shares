@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/transaction")
+@RequestMapping(path = "/api/transaction")
 public class TransactionController {
 
     private final TransactionService transactionService;
@@ -29,5 +29,17 @@ public class TransactionController {
     @CrossOrigin(methods = RequestMethod.POST)
     public ResponseEntity<?> addTransaction(@RequestBody Transaction transaction) throws IOException {
         return transactionService.addTransaction(transaction);
+    }
+
+    @PutMapping
+    @CrossOrigin(methods = RequestMethod.PUT)
+    public ResponseEntity<?> editTransaction(@RequestBody Transaction transaction) {
+        return transactionService.editTransaction(transaction);
+    }
+
+    @DeleteMapping
+    @CrossOrigin(methods = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteTransaction(@RequestParam Long id) {
+        return transactionService.deleteTransaction(id);
     }
 }

@@ -9,6 +9,7 @@
 <script>
   import EmptyLayout from './layouts/EmptyLayout'
   import MainLayout from './layouts/MainLayout'
+  import ChartLayout from "./layouts/ChartLayout";
   export default {
       computed: {
           layout () {
@@ -16,7 +17,7 @@
           }
       },
       components: {
-          EmptyLayout, MainLayout
+          EmptyLayout, MainLayout, ChartLayout
       }
   }
 </script>

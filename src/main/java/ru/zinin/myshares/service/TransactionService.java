@@ -35,17 +35,6 @@ public class TransactionService {
         this.restTemplate = restTemplate;
     }
 
-//    @PostConstruct
-//    public void add() {
-//        List<Transaction> transactions = new ArrayList<>() {{
-//            add(new Transaction("MSFT", true, 5.65, 8, 54466656555588l, 1L, "kjhjkjh"));
-//            add(new Transaction("T", false, 48.96, 25, 544655546565688l, 1L, "gfdgfd"));
-//            add(new Transaction("MO", false, 57.65, 3, 5446665656554545688l, 1L, "lk454k45"));
-//        }};
-//
-//        transactionRepo.saveAll(transactions);
-//    }
-
     public ResponseEntity<?> getTransactions() throws IOException {
         if (tokenFactory.isValidToken()) {
             tokenFactory.updateTimeValidityToken();

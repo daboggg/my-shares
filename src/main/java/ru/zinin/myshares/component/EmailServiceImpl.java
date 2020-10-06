@@ -15,13 +15,11 @@ public class EmailServiceImpl {
     }
 
     public void sendSimpleMessage(String to, String subject, String text) {
-        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("alert@vzinin.ru");
-        message.setTo("vzinin@list.ru");
-        message.setSubject("TEST");
-        message.setText("привет, это просто проверка, ура!!!");
+        message.setTo(to);
+        message.setSubject(subject);
+        message.setText(text);
         mailSender.send(message);
-        System.out.println("DRDRDRDRDRDRDRDRDRRDRDRRDDR");
     }
 }

@@ -43,7 +43,7 @@ public class TestController {
     @GetMapping(path = "/test")
     @CrossOrigin(methods = RequestMethod.GET)
     public ResponseEntity<?> test() {
-        emailService.sendSimpleMessage("a","b","c");
+        emailService.sendSimpleMessage("daboggg@ya.ru","Test","просто проверка");
         return ResponseEntity.ok("OK");
     }
 }

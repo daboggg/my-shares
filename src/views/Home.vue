@@ -150,6 +150,7 @@
                         // изменение в процентах за все время
                         position.allTimePercent = ((position.lastPrice - position.price) / position.price * 100).toFixed(2)
 
+                        // если число акций равно или меньше ноля, сбрасываем значения
                         if (position.numberOfShares <= 0) {
                             position.allTime = 0
                             position.allTimePercent = 0

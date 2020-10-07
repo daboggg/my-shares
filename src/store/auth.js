@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import router from '../router'
-const  ipEndPort = process.env.VUE_APP_SERVERIPENDPORT
+
+const ipEndPort = process.env.VUE_APP_SERVERIPENDPORT
 export default {
     state: {
         username: null,
@@ -18,6 +19,9 @@ export default {
             state.token = null
             sessionStorage.removeItem('username')
             sessionStorage.removeItem('token')
+        },
+        setUsername(state, username) {
+            state.username = username
         }
     },
     actions: {
@@ -29,7 +33,7 @@ export default {
                 const data = await res.json()
                 commit('login', data)
                 await router.push('/')
-            }catch (e) {
+            } catch (e) {
                 console.log(e.bodyText || e.body)
                 commit('setError', e.bodyText || e.body)
             }
@@ -42,9 +46,48 @@ export default {
                 const data = await res.json()
                 commit('login', data)
                 await router.push('/')
-            }catch (e) {
+            } catch (e) {
                 console.log(e.bodyText || e.body)
                 commit('setError', e.bodyText || e.body)
+            }
+        },
+        async getProfile({commit, getters}) {
+            try {
+                const res = await Vue.http.get(`${ipEndPort}api/user/profile`, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Token': getters.getToken
+                    }
+                })
+                const data = await res.json()
+                return data
+            } catch (e) {
+                if (e.bodyText === 'invalid token') {
+                    router.push("/login?message=invalid token");
+                } else {
+                    console.log(e.bodyText || e.body);
+                    commit('setError', e.bodyText || e.body)
+                }
+            }
+        },
+        async changeUsername({commit, getters}, newUsername) {
+            try {
+                const res = await Vue.http.put(`${ipEndPort}api/user/changeUsername`,
+                    newUsername,
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Token': getters.getToken
+                        }
+                    })
+                commit('setUsername', res.bodyText)
+            } catch (e) {
+                if (e.bodyText === 'invalid token') {
+                    router.push("/login?message=invalid token");
+                } else {
+                    console.log(e.bodyText || e.body);
+                    commit('setError', e.bodyText || e.body)
+                }
             }
         }
     },

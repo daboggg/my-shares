@@ -5,4 +5,6 @@ import ru.zinin.myshares.model.User;
 
 public interface UserPepo extends JpaRepository<User, Long> {
     User getUserByEmail(String email);
+
+    User getUserById(Long userId);
 }

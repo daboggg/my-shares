@@ -13,7 +13,7 @@
         <li>
           <ul id="dropdown" class="dropdown-content">
             <li><a href="#!">one</a></li>
-            <li><a href="#!">two</a></li>
+            <li><router-link to="/profile">профиль</router-link></li>
             <li class="divider"></li>
             <li><router-link to="/login?message=you are out">выйти</router-link></li>
           </ul>

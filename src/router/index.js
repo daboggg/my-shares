@@ -30,6 +30,12 @@ const routes = [
         component: () => import('../components/Charts.vue')
     },
     {
+        path: '/profile',
+        name: 'profile',
+        meta: {layout: 'main', auth: true},
+        component: () => import('../views/Profile.vue')
+    },
+    {
         path: '/login',
         name: 'login',
         meta: {layout: 'empty'},

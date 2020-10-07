@@ -4,9 +4,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.zinin.myshares.component.TokenFactory;
+import ru.zinin.myshares.model.Alert;
 import ru.zinin.myshares.model.User;
 import ru.zinin.myshares.model.UserDto;
 import ru.zinin.myshares.repo.UserPepo;
+
+import java.util.List;
 
 @Service
 public class UserService {
@@ -61,6 +64,36 @@ public class UserService {
                 // возвращаем UserDto с username и token
                 return ResponseEntity.ok(tokenFactory.addToken(userFromDb));
             }
+        }
+    }
+
+    public ResponseEntity<?> getProfile() {
+        if (tokenFactory.isValidToken()) {
+            tokenFactory.updateTimeValidityToken();
+            User userFromDb = userRepo.getUserById(tokenFactory.getUserId());
+            UserDto userDto = new UserDto();
+            userDto.setEmail(userFromDb.getEmail());
+            userDto.setUsername(userFromDb.getUsername());
+            return ResponseEntity.ok(userDto);
+        } else {
+            return new ResponseEntity<>(
+                    "invalid token",
+                    HttpStatus.FORBIDDEN
+            );
+        }
+    }
+
+    public ResponseEntity<?> changeUsername(String newUsername) {
+        if (tokenFactory.isValidToken()) {
+            tokenFactory.updateTimeValidityToken();
+            User userFromDb = userRepo.getUserById(tokenFactory.getUserId());
+            userFromDb.setUsername(newUsername);
+            return ResponseEntity.ok(userRepo.save(userFromDb).getUsername());
+        } else {
+            return new ResponseEntity<>(
+                    "invalid token",
+                    HttpStatus.FORBIDDEN
+            );
         }
     }
 }

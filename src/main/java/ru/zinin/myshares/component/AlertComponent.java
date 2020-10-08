@@ -34,7 +34,7 @@ public class AlertComponent {
         this.alertRepo = alertRepo;
     }
 
-//        @Scheduled(cron = "0 0/15 16-23 * * MON-FRI", zone = "Europe/Moscow")
+//        @Scheduled(cron = "0 0/10 16-23 * * MON-FRI", zone = "Europe/Moscow")
 //        @Scheduled(cron = "0 0/15 * * * ?", zone = "Europe/Moscow") // для тестов
     @Scheduled(cron = "0 */2 * * * ?", zone = "Europe/Moscow") // для тестов
     public void alertCtrl() throws IOException, MessagingException {

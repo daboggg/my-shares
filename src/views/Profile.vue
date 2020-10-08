@@ -19,10 +19,11 @@
             </div>
             <div id="test1" class="col s12">
               <h5 class="center-align">изменить имя пользователя</h5>
-              <ChangeUsernameForm :username="profile.username" />
+              <change-username-form :username="profile.username" @updateProfile="updateProfile"/>
             </div>
             <div id="test2" class="col s12">
               <h5 class="center-align">изменить email</h5>
+              <change-email-fofm :email="profile.email" @updateProfile="updateProfile" />
             </div>
             <div id="test3" class="col s12">
               <h5 class="center-align">изменить пароль</h5>
@@ -36,6 +37,7 @@
 
 <script>
   import ChangeUsernameForm from "../components/ChangeUsernameForm";
+  import ChangeEmailFofm from "../components/ChangeEmailFofm";
     export default {
         name: "Profile",
         data: () => ({
@@ -47,13 +49,18 @@
             this.tabs = M.Tabs.init(this.$refs.tabs)
             this.profile = await this.$store.dispatch('getProfile')
         },
+        methods: {
+            async updateProfile() {
+                this.profile = await this.$store.dispatch('getProfile')
+            }
+        },
         destroyed() {
             if (this.tabs && this.tabs.destroy) {
                 this.tabs.destroy()
             }
         },
         components: {
-            ChangeUsernameForm
+            ChangeUsernameForm, ChangeEmailFofm
         }
     }
 </script>

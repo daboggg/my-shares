@@ -1,29 +1,29 @@
 <template>
   <div class="container" style="margin-top: 40px;">
     <div class="row">
-      <form class="col s12" @submit.prevent="changeUsername">
+      <form class="col s12" @submit.prevent="changeEmail">
         <div class="row valign-wrapper">
           <div class="input-field col s6">
-            <label for="username">username</label>
+            <label for="email">email</label>
             <input
-                    v-model.trim="newUsername"
-                    placeholder="username"
-                    id="username"
+                    v-model.trim="newEmail"
+                    placeholder="email"
+                    id="email"
                     type="text"
                     class="validate"
-                    :class="{ invalid: ($v.newUsername.$dirty && !$v.newUsername.required) || ($v.newUsername.$dirty && !$v.newUsername.minLength) }"
+                    :class="{ invalid: ($v.newEmail.$dirty && !$v.newEmail.required) || ($v.newEmail.$dirty && !$v.newEmail.email) }"
             >
             <small
                     class="helper-text invalid"
-                    v-if="$v.newUsername.$dirty && !$v.newUsername.required"
+                    v-if="$v.newEmail.$dirty && !$v.newEmail.required"
             >
-              введите свое имя
+              введите email
             </small>
             <small
                     class="helper-text invalid"
-                    v-if="$v.newUsername.$dirty && !$v.newUsername.minLength"
+                    v-if="$v.newEmail.$dirty && !$v.newEmail.email"
             >
-              минимум {{ $v.newUsername.$params.minLength.min }} символов, сечас {{ newUsername.length }}
+              введите корректный email
             </small>
           </div>
           <div class="col s6">
@@ -36,25 +36,24 @@
       </form>
     </div>
   </div>
-
 </template>
 
 <script>
-    import {required, minLength} from 'vuelidate/lib/validators'
+    import {email, required} from 'vuelidate/lib/validators'
     export default {
-        name: "ChangeUsernameForm",
-        props: ['username'],
+        name: "ChangeEmailFofm",
+        props: ['email'],
         data: () => ({
-            newUsername: '',
+            newEmail: '',
             loading: false
         }),
         validations: {
-            newUsername: {required, minLength: minLength(3)},
+            newEmail: {email, required},
         },
         watch: {
-            username(username) {
+            email(email) {
                 this.loading = false
-                this.newUsername = username
+                this.newEmail = email
             }
         },
         mounted() {
@@ -62,16 +61,16 @@
             M.updateTextFields()
         },
         methods: {
-            async changeUsername() {
-                if (this.username === this.newUsername) return
+            async changeEmail() {
+                if (this.email === this.newEmail) return
                 if (this.$v.$invalid) {
                     this.$v.$touch()
                     return
                 }
                 this.loading = true
-                await this.$store.dispatch('changeUsername', this.newUsername)
+                await this.$store.dispatch('changeEmail', this.newEmail)
                 this.$emit('updateProfile')
-                this.$store.commit('setMessage', 'имя пользователя изменено')
+                this.$store.commit('setMessage', 'email изменен')
             }
         }
     }

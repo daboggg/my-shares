@@ -80,13 +80,22 @@ public class TokenFactory {
     // по расписанию очищает tokens
     @Scheduled(cron = "0 0 0 * * ?", zone = "Europe/Moscow")
     public void reportCurrentTime() {
-        Set<String> keys = tokens.keySet();
-        for (String key : keys) {
-            TokenHolder tokenHolder = tokens.get(key);
+
+        Iterator<Map.Entry<String, TokenHolder>> entryIterator = tokens.entrySet().iterator();
+        while (entryIterator.hasNext()) {
+            Map.Entry<String, TokenHolder> entry = entryIterator.next();
+            TokenHolder tokenHolder = entry.getValue();
             if (tokenHolder.creationTimeToken + timeValidityToken < System.currentTimeMillis()) {
-                tokens.remove(key);
+                entryIterator.remove();
             }
         }
+//        Set<String> keys = tokens.keySet();
+//        for (String key : keys) {
+//            TokenHolder tokenHolder = tokens.get(key);
+//            if (tokenHolder.creationTimeToken + timeValidityToken < System.currentTimeMillis()) {
+//                tokens.remove(key);
+//            }
+//        }
     }
 
     @Data

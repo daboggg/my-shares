@@ -80,7 +80,27 @@ export default {
                             'Token': getters.getToken
                         }
                     })
-                commit('setUsername', res.bodyText)
+                const data = await res.json()
+                commit('login', data)
+            } catch (e) {
+                if (e.bodyText === 'invalid token') {
+                    router.push("/login?message=invalid token");
+                } else {
+                    console.log(e.bodyText || e.body);
+                    commit('setError', e.bodyText || e.body)
+                }
+            }
+        },
+        async changeEmail({commit, getters}, newEmail) {
+            try {
+                await Vue.http.put(`${ipEndPort}api/user/changeEmail`,
+                    newEmail,
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Token': getters.getToken
+                        }
+                    })
             } catch (e) {
                 if (e.bodyText === 'invalid token') {
                     router.push("/login?message=invalid token");

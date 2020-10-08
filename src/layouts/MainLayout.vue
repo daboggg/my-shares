@@ -59,7 +59,7 @@
         computed: {
             username() {
                 return this.$store.getters.getUsername
-            }
+            },
         },
         beforeDestroy() {
             if (this.sidebar && this.sidebar.destroy) {

@@ -21,6 +21,12 @@ public class UserController {
         return userService.changeUsername(newUsername);
     }
 
+    @PutMapping(path = "/changeEmail")
+    @CrossOrigin(methods = RequestMethod.PUT)
+    public ResponseEntity<?> changeEmail(@RequestBody String newEmail) {
+        return userService.changeEmail(newEmail);
+    }
+
     @GetMapping(path = "/profile")
     @CrossOrigin(methods = RequestMethod.GET)
     public ResponseEntity<?> getProfile() {

@@ -88,7 +88,24 @@ public class UserService {
             tokenFactory.updateTimeValidityToken();
             User userFromDb = userRepo.getUserById(tokenFactory.getUserId());
             userFromDb.setUsername(newUsername);
-            return ResponseEntity.ok(userRepo.save(userFromDb).getUsername());
+            User save = userRepo.save(userFromDb);
+            UserDto userDto = tokenFactory.addToken(save);
+            return ResponseEntity.ok(userDto);
+        } else {
+            return new ResponseEntity<>(
+                    "invalid token",
+                    HttpStatus.FORBIDDEN
+            );
+        }
+    }
+
+    public ResponseEntity<?> changeEmail(String newEmail) {
+        if (tokenFactory.isValidToken()) {
+            tokenFactory.updateTimeValidityToken();
+            User userFromDb = userRepo.getUserById(tokenFactory.getUserId());
+            userFromDb.setEmail(newEmail);
+            userRepo.save(userFromDb);
+            return ResponseEntity.ok("EMAIL SAVED");
         } else {
             return new ResponseEntity<>(
                     "invalid token",

@@ -2,6 +2,7 @@ package ru.zinin.myshares.component;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -16,6 +17,7 @@ import java.util.*;
 @Component
 @Data
 @EnableScheduling
+@Slf4j
 public class TokenFactory {
 
     @Value("${time.validity.token}")
@@ -80,7 +82,7 @@ public class TokenFactory {
     // по расписанию очищает tokens
     @Scheduled(cron = "0 0 0 * * ?", zone = "Europe/Moscow")
     public void reportCurrentTime() {
-
+        log.info("start clean tokens: количество токенов:  " + tokens.size());
         Iterator<Map.Entry<String, TokenHolder>> entryIterator = tokens.entrySet().iterator();
         while (entryIterator.hasNext()) {
             Map.Entry<String, TokenHolder> entry = entryIterator.next();
@@ -89,6 +91,7 @@ public class TokenFactory {
                 entryIterator.remove();
             }
         }
+        log.info("end clean tokens: количество токенов:  " + tokens.size());
 //        Set<String> keys = tokens.keySet();
 //        for (String key : keys) {
 //            TokenHolder tokenHolder = tokens.get(key);

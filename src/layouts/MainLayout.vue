@@ -22,6 +22,7 @@
       <ul class="right hide-on-small-only">
         <li v-for="item in menuItems" :key="item.name"><router-link :to="item.path">{{item.name}}</router-link></li>
       </ul>
+      <p class="center">-{{view}}-</p>
     </nav>
 
     <ul ref="sidenav" class="sidenav" id="mobile-demo">
@@ -60,6 +61,9 @@
             username() {
                 return this.$store.getters.getUsername
             },
+            view() {
+                return this.$route.name.toUpperCase()
+            }
         },
         beforeDestroy() {
             if (this.sidebar && this.sidebar.destroy) {

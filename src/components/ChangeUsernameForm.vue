@@ -71,7 +71,6 @@
                 this.loading = true
                 await this.$store.dispatch('changeUsername', this.newUsername)
                 this.$emit('updateProfile')
-                this.$store.commit('setMessage', 'имя пользователя изменено')
             }
         }
     }

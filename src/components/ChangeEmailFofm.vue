@@ -70,7 +70,6 @@
                 this.loading = true
                 await this.$store.dispatch('changeEmail', this.newEmail)
                 this.$emit('updateProfile')
-                this.$store.commit('setMessage', 'email изменен')
             }
         }
     }

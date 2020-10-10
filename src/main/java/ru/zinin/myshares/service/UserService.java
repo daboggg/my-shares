@@ -113,4 +113,32 @@ public class UserService {
             );
         }
     }
+
+    public ResponseEntity<?> checkOldPassword(String oldPassword) {
+        if (tokenFactory.isValidToken()) {
+            tokenFactory.updateTimeValidityToken();
+            User userFromDb = userRepo.getUserById(tokenFactory.getUserId());
+            return ResponseEntity.ok(oldPassword.equals(userFromDb.getPassword()));
+        } else {
+            return new ResponseEntity<>(
+                    "invalid token",
+                    HttpStatus.FORBIDDEN
+            );
+        }
+    }
+
+    public ResponseEntity<?> changePassword(String newPassword) {
+        if (tokenFactory.isValidToken()) {
+            tokenFactory.updateTimeValidityToken();
+            User userFromDb = userRepo.getUserById(tokenFactory.getUserId());
+            userFromDb.setPassword(newPassword);
+            userRepo.save(userFromDb);
+            return ResponseEntity.ok("OK");
+        } else {
+            return new ResponseEntity<>(
+                    "invalid token",
+                    HttpStatus.FORBIDDEN
+            );
+        }
+    }
 }

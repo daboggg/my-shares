@@ -82,6 +82,7 @@ export default {
                     })
                 const data = await res.json()
                 commit('login', data)
+                commit('setMessage', 'имя пользователя изменено')
             } catch (e) {
                 if (e.bodyText === 'invalid token') {
                     router.push("/login?message=invalid token");
@@ -101,6 +102,50 @@ export default {
                             'Token': getters.getToken
                         }
                     })
+                commit('setMessage', 'email изменен')
+            } catch (e) {
+                if (e.bodyText === 'invalid token') {
+                    router.push("/login?message=invalid token");
+                } else {
+                    console.log(e.bodyText || e.body);
+                    commit('setError', e.bodyText || e.body)
+                }
+            }
+        },
+        async checkOldPassword({commit, getters}, oldPassword) {
+            try {
+                const res = await Vue.http.post(`${ipEndPort}api/user/checkOldPassword`,
+                    oldPassword,
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Token': getters.getToken
+                        }
+                    })
+
+                return res.bodyText
+                // commit('setMessage', 'email изменен')
+            } catch (e) {
+                if (e.bodyText === 'invalid token') {
+                    router.push("/login?message=invalid token");
+                } else {
+                    console.log(e.bodyText || e.body);
+                    commit('setError', e.bodyText || e.body)
+                }
+            }
+        },
+        async changePassword({commit, getters}, newPassword) {
+            try {
+                await Vue.http.put(`${ipEndPort}api/user/changePassword`,
+                    newPassword,
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Token': getters.getToken
+                        }
+                    })
+
+                commit('setMessage', 'пароль изменен')
             } catch (e) {
                 if (e.bodyText === 'invalid token') {
                     router.push("/login?message=invalid token");

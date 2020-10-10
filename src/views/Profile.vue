@@ -27,6 +27,7 @@
             </div>
             <div id="test3" class="col s12">
               <h5 class="center-align">изменить пароль</h5>
+              <change-password-form />
             </div>
           </div>
         </div>
@@ -38,6 +39,7 @@
 <script>
   import ChangeUsernameForm from "../components/ChangeUsernameForm";
   import ChangeEmailFofm from "../components/ChangeEmailFofm";
+  import ChangePasswordForm from "../components/ChangePasswordForm";
     export default {
         name: "Profile",
         data: () => ({
@@ -60,7 +62,7 @@
             }
         },
         components: {
-            ChangeUsernameForm, ChangeEmailFofm
+            ChangeUsernameForm, ChangeEmailFofm, ChangePasswordForm
         }
     }
 </script>

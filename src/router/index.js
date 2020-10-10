@@ -13,7 +13,7 @@ const routes = [
     },
     {
         path: '/add',
-        name: 'addTransaction',
+        name: 'add transaction',
         meta: {layout: 'main', auth: true},
         component: () => import('../views/AddTransaction.vue')
     },

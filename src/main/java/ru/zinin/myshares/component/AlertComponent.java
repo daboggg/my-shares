@@ -1,6 +1,7 @@
 package ru.zinin.myshares.component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 
 @Component
 @EnableScheduling
+@Slf4j
 public class AlertComponent {
 
     @Value("${ameritrade.key}")
@@ -34,10 +36,12 @@ public class AlertComponent {
         this.alertRepo = alertRepo;
     }
 
-//        @Scheduled(cron = "0 0/10 16-23 * * MON-FRI", zone = "Europe/Moscow")
+        @Scheduled(cron = "0 0/10 16-23 * * MON-FRI", zone = "Europe/Moscow")
 //        @Scheduled(cron = "0 0/15 * * * ?", zone = "Europe/Moscow") // для тестов
-    @Scheduled(cron = "0 */2 * * * ?", zone = "Europe/Moscow") // для тестов
+//    @Scheduled(cron = "0 */2 * * * ?", zone = "Europe/Moscow") // для тестов
     public void alertCtrl() throws IOException, MessagingException {
+
+        log.info("checking alerts");
 
         // находим все алерты в базе
         List<Alert> alerts = alertRepo.findAll();

@@ -17,9 +17,16 @@ public class UserController {
         this.userService = userService;
     }
 
+    @DeleteMapping
+    @CrossOrigin(methods = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteUser() {
+        return userService.deleteUser();
+    }
+
     @PutMapping(path = "/changePassword")
     @CrossOrigin(methods = RequestMethod.PUT)
     public ResponseEntity<?> changePassword(@RequestBody String newPassword) {
+
         return userService.changePassword(newPassword);
     }
 

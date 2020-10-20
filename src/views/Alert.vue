@@ -84,8 +84,12 @@
         <table class="centered striped">
           <thead>
           <tr>
-            <th>Ticker</th>
-            <th>Action</th>
+            <th @click="sortAlerts('ticker')">
+              Ticker <i class=" tiny material-icons">{{tickerSortDirection?'arrow_upward':'arrow_downward'}}</i>
+            </th>
+            <th @click="sortAlerts('action')">
+              Action <i class=" tiny material-icons">{{actionSortDirection?'arrow_upward':'arrow_downward'}}</i>
+            </th>
             <th>Value</th>
             <th>Delete</th>
           </tr>
@@ -97,7 +101,8 @@
             <td>{{alert.action}}</td>
             <td>{{alert.value}}</td>
             <td>
-              <button @click="deleteAlert(alert.id)" type="button" class="btn-flat"><i class="material-icons">delete</i></button>
+              <button @click="deleteAlert(alert.id)" type="button" class="btn-flat"><i class="material-icons">delete</i>
+              </button>
             </td>
           </tr>
           </tbody>
@@ -122,15 +127,38 @@
             action: '',
             value: 0,
             alerts: [],
-            typeAlerts: ['intersectsValueUp', 'intersectsValueDown', 'growth(percent)', 'drop(percent)']
+            typeAlerts: ['intersectsValueUp', 'intersectsValueDown', 'growth(percent)', 'drop(percent)'],
+            tickerSortDirection: false,
+            actionSortDirection: false,
+            sortColumn: 'direction'
         }),
         validations: {
             searchString: {required}
         },
         async mounted() {
-            this.alerts = await this.$store.dispatch('getAlerts')
+            this.alerts = (await this.$store.dispatch('getAlerts'))
+            this.alerts.sort((a, b) => a.ticker < b.ticker ? -1 : a.ticker > b.ticker ? 1 : 0)
         },
         methods: {
+            sortAlerts(value) {
+                if (value === 'ticker') {
+                    this.tickerSortDirection = !this.tickerSortDirection
+                    if (!this.tickerSortDirection) {
+                        this.alerts.sort((a, b) => a.ticker < b.ticker ? -1 : a.ticker > b.ticker ? 1 : 0);
+                    } else {
+                        this.alerts.sort((a, b) => a.ticker > b.ticker ? -1 : a.ticker < b.ticker ? 1 : 0)
+                    }
+                }
+                if (value === 'action') {
+                    this.actionSortDirection = !this.actionSortDirection
+                    if (!this.actionSortDirection) {
+                        this.alerts.sort((a, b) => a.action < b.action ? -1 : a.action > b.action ? 1 : 0);
+                    } else {
+                        this.alerts.sort((a, b) => a.action > b.action ? -1 : a.action < b.action ? 1 : 0)
+                    }
+                }
+
+            },
             async searchTicker() {
                 if (this.$v.$invalid) {
                     this.$v.$touch()

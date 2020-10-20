@@ -154,6 +154,25 @@ export default {
                     commit('setError', e.bodyText || e.body)
                 }
             }
+        },
+        async deleteUser({commit, getters}) {
+            try {
+                await Vue.http.delete(`${ipEndPort}api/user`,
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Token': getters.getToken
+                        }
+                    })
+                await router.push('/login?message=user deleted')
+            } catch (e) {
+                if (e.bodyText === 'invalid token') {
+                    router.push("/login?message=invalid token");
+                } else {
+                    console.log(e.bodyText || e.body);
+                    commit('setError', e.bodyText || e.body)
+                }
+            }
         }
     },
     getters: {

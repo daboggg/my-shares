@@ -9,4 +9,8 @@ public interface AlertRepo extends JpaRepository<Alert, Long> {
     List<Alert> getAllByUserId(Long userId);
 
     Alert getById(Long userId);
+
+    void deleteAllByUserId(long userId);
+
+    void deleteAlertsByUserId(long userId);
 }

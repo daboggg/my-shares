@@ -24,6 +24,30 @@ const routes = [
         component: () => import('../views/Alert.vue')
     },
     {
+        path: '/addNote',
+        name: 'add note',
+        meta: {layout: 'main', auth: true},
+        component: () => import('../views/AddNote.vue')
+    },
+    {
+        path: '/noteEdit/:id',
+        name: 'note edit',
+        meta: {layout: 'main', auth: true},
+        component: () => import('../views/NoteEdit.vue')
+    },
+    {
+        path: '/note/:id',
+        name: 'note',
+        meta: {layout: 'main', auth: true},
+        component: () => import('../views/Note.vue')
+    },
+    {
+        path: '/notebook',
+        name: 'notebook',
+        meta: {layout: 'main', auth: true},
+        component: () => import('../views/Notebook.vue')
+    },
+    {
         path: '/charts/:ticker',
         name: 'charts',
         meta: {layout: 'chart', auth: true},

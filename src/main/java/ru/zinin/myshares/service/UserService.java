@@ -4,21 +4,29 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.zinin.myshares.component.TokenFactory;
-import ru.zinin.myshares.model.Alert;
 import ru.zinin.myshares.model.User;
 import ru.zinin.myshares.model.UserDto;
+import ru.zinin.myshares.repo.AlertRepo;
+import ru.zinin.myshares.repo.NoteRepo;
+import ru.zinin.myshares.repo.TransactionRepo;
 import ru.zinin.myshares.repo.UserPepo;
 
-import java.util.List;
+import javax.transaction.Transactional;
 
 @Service
 public class UserService {
 
     private final UserPepo userRepo;
+    private final AlertRepo alertRepo;
+    private final NoteRepo noteRepo;
+    private final TransactionRepo transactionRepo;
     private final TokenFactory tokenFactory;
 
-    public UserService(UserPepo userRepo, TokenFactory tokenFactory) {
+    public UserService(UserPepo userRepo, AlertRepo alertRepo, NoteRepo noteRepo, TransactionRepo transactionRepo, TokenFactory tokenFactory) {
         this.userRepo = userRepo;
+        this.alertRepo = alertRepo;
+        this.noteRepo = noteRepo;
+        this.transactionRepo = transactionRepo;
         this.tokenFactory = tokenFactory;
     }
 
@@ -134,6 +142,27 @@ public class UserService {
             userFromDb.setPassword(newPassword);
             userRepo.save(userFromDb);
             return ResponseEntity.ok("OK");
+        } else {
+            return new ResponseEntity<>(
+                    "invalid token",
+                    HttpStatus.FORBIDDEN
+            );
+        }
+    }
+
+    @Transactional
+    public ResponseEntity<?> deleteUser() {
+        if (tokenFactory.isValidToken()) {
+            tokenFactory.updateTimeValidityToken();
+            long userId = tokenFactory.getUserId();
+            System.out.println(alertRepo);
+            alertRepo.deleteAllByUserId(userId);
+            noteRepo.deleteAllByUserId(userId);
+            transactionRepo.deleteAllByUserId(userId);
+            User userById = userRepo.getUserById(userId);
+            userRepo.delete(userById);
+            return ResponseEntity.ok("USER DELETED");
+
         } else {
             return new ResponseEntity<>(
                     "invalid token",

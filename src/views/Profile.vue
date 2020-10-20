@@ -7,6 +7,7 @@
             <span class="card-title center-align">Profile:</span>
             <h5>Username: <b>{{profile.username}}</b></h5>
             <h5>Email: <b>{{profile.email}}</b></h5>
+            <button @click="modal.open()" style="margin-top: 20px;" class="btn">Удалить пользователя</button>
             <span class="card-title center-align" style="margin-top: 50px;">Change:</span>
           </div>
           <div class="row">
@@ -33,6 +34,17 @@
         </div>
       </div>
     </div>
+    <!-- Modal Structure -->
+    <div ref="modal" id="modal1" class="modal">
+      <div class="modal-content">
+        <h4  class="center-align red-text">Внимание!</h4>
+        <h6 class="center-align red-text">Точно удалить пользователя?</h6>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" @click="deleteUser" class="left modal-close waves-effect waves-green btn-flat">Удалить</a>
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Отмена</a>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -44,9 +56,12 @@
         name: "Profile",
         data: () => ({
             profile: {},
-            tabs: null
+            tabs: null,
+            modal: null
         }),
         async mounted() {
+            // eslint-disable-next-line no-undef
+            this.modal = M.Modal.init(this.$refs.modal)
             // eslint-disable-next-line no-undef
             this.tabs = M.Tabs.init(this.$refs.tabs)
             this.profile = await this.$store.dispatch('getProfile')
@@ -54,11 +69,17 @@
         methods: {
             async updateProfile() {
                 this.profile = await this.$store.dispatch('getProfile')
+            },
+            async deleteUser() {
+                await this.$store.dispatch('deleteUser')
             }
         },
         destroyed() {
             if (this.tabs && this.tabs.destroy) {
                 this.tabs.destroy()
+            }
+            if (this.modal && this.modal.destroy) {
+                this.modal.destroy()
             }
         },
         components: {

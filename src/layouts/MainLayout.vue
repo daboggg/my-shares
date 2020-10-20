@@ -12,7 +12,6 @@
         </li>
         <li>
           <ul id="dropdown" class="dropdown-content">
-            <li><a href="#!">one</a></li>
             <li><router-link to="/profile">профиль</router-link></li>
             <li class="divider"></li>
             <li><router-link to="/login?message=you are out">выйти</router-link></li>
@@ -22,7 +21,7 @@
       <ul class="right hide-on-small-only">
         <li v-for="item in menuItems" :key="item.name"><router-link :to="item.path">{{item.name}}</router-link></li>
       </ul>
-      <p class="center">-{{view}}-</p>
+      <p class="center">- {{view}} -</p>
     </nav>
 
     <ul ref="sidenav" class="sidenav" id="mobile-demo">
@@ -43,8 +42,8 @@
             menuItems: [
                 {name: 'Home', path: '/'},
                 {name: 'Add', path: '/add'},
-                {name: 'Alert', path: '/alert'},
-                {name: 'Four', path: 'ddd'},
+                {name: 'Notebook', path: '/notebook'},
+                {name: 'Alert', path: '/alert'}
             ],
             dropdown: null,
             sidebar: null

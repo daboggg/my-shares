@@ -92,6 +92,11 @@
                     this.$store.commit('clearTransactions')
                     this.$store.commit('setMessage', 'войдите в приложение')
                 }
+                if (this.$route.query.message === 'user deleted') {
+                    this.$store.commit('logout')
+                    this.$store.commit('clearTransactions')
+                    this.$store.commit('setMessage', 'пользователь удален')
+                }
             }
         },
         methods: {

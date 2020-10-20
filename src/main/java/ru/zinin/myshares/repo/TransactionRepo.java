@@ -9,4 +9,6 @@ public interface TransactionRepo extends JpaRepository<Transaction, Long> {
     public List<Transaction> getAllByUserId(long userId);
 
     public Transaction getById(long id);
+
+    void deleteAllByUserId(long userId);
 }

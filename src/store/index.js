@@ -4,7 +4,9 @@ import auth from "./auth";
 import transaction from "./transaction";
 import chart from "./chart";
 import alert from "./alert";
+import note from "./note";
 import router from "../router";
+
 const  ipEndPort = process.env.VUE_APP_SERVERIPENDPORT
 
 Vue.use(Vuex)
@@ -55,6 +57,6 @@ export default new Vuex.Store({
         message: s => s.message
     },
     modules: {
-        auth, transaction, chart, alert
+        auth, transaction, chart, alert, note
     }
 })
